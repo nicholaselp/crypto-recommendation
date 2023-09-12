@@ -1,13 +1,16 @@
 package com.cryptorecommendation.model;
 
-import org.joda.time.DateTime;
+import com.cryptorecommendation.exceptions.ValidationException;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.sql.Timestamp;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static java.util.Objects.isNull;
 import static java.util.Objects.requireNonNull;
@@ -24,11 +27,11 @@ public class CryptoCurrency {
     public String getSymbol(){ return symbol; }
 
     public BigDecimal getMaxPrice(){
-        return priceMap.entrySet().stream().max(Map.Entry.comparingByKey()).map(Map.Entry::getValue)
+        return priceMap.entrySet().stream().max(Map.Entry.comparingByValue()).map(Map.Entry::getValue)
                 .orElse(BigDecimal.ZERO);
     }
     public BigDecimal getMinPrice(){
-        return priceMap.entrySet().stream().min(Map.Entry.comparingByKey()).map(Map.Entry::getValue)
+        return priceMap.entrySet().stream().min(Map.Entry.comparingByValue()).map(Map.Entry::getValue)
                 .orElse(BigDecimal.ZERO);
     }
 
@@ -45,29 +48,60 @@ public class CryptoCurrency {
 
     public BigDecimal getNormalizedRange(){
         //TODO: is Rounding.FLOOR ok? also scale 2 is ok?
-        return getMaxPrice().subtract(getMinPrice()).divide(getMaxPrice(), 2, RoundingMode.FLOOR);
+        return getMaxPrice().subtract(getMinPrice()).divide(getMinPrice(), 4, RoundingMode.FLOOR);
     }
 
-    public BigDecimal getNormalizedRange(DateTime dateTime){
-        return getMaxPriceSpecificDate(dateTime).subtract(getMinPriceSpecificDate(dateTime))
-                .divide(getMaxPriceSpecificDate(dateTime), 2, RoundingMode.FLOOR);
+    public BigDecimal getNormalizedRange(Date date){
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+
+        if(!containsDate(calendar)){
+            throw new ValidationException("No Data found for: " + date);
+        }
+
+        var maxPrice = getMaxPriceSpecificDate(calendar);
+        var minPrice = getMinPriceSpecificDate(calendar);
+        return maxPrice.subtract(minPrice).divide(minPrice, 4, RoundingMode.FLOOR);
     }
 
-    private BigDecimal getMaxPriceSpecificDate(DateTime dateTime){
-        return priceMap.entrySet().stream()
-                .filter(entry -> entry.getKey().equals(new Timestamp(dateTime.getMillis())))
-                .map(Map.Entry::getValue)
+    private boolean containsDate(Calendar calendar) {
+        return priceMap.keySet().stream()
+                .map(timestamp -> {
+                    Calendar entryCalendar = Calendar.getInstance();
+                    entryCalendar.setTime(timestamp);
+                    return entryCalendar;
+                })
+                .anyMatch(entrycalendar -> entrycalendar.get(Calendar.YEAR) == calendar.get(Calendar.YEAR)
+                        && entrycalendar.get(Calendar.MONTH) == calendar.get(Calendar.MONTH)
+                        && entrycalendar.get(Calendar.DAY_OF_MONTH) == calendar.get(Calendar.DAY_OF_MONTH));
+    }
+
+    private BigDecimal getMaxPriceSpecificDate(Calendar calendar){
+        var x = getSpecificDate(calendar).toList();
+        return getSpecificDate(calendar)
                 .max(BigDecimal::compareTo)
                 .orElse(BigDecimal.ZERO);
     }
 
-    private BigDecimal getMinPriceSpecificDate(DateTime dateTime){
-        return priceMap.entrySet().stream()
-                .filter(entry -> entry.getKey().equals(new Timestamp(dateTime.getMillis())))
-                .map(Map.Entry::getValue)
+    private BigDecimal getMinPriceSpecificDate(Calendar calendar){
+        return getSpecificDate(calendar)
                 .min(BigDecimal::compareTo)
-                .orElse(BigDecimal.ZERO);
+                .orElse(BigDecimal.ZERO); //TODO: dont like this..
     }
+
+    private Stream<BigDecimal> getSpecificDate(Calendar calendar){
+        return priceMap.entrySet().stream()
+                .filter(entry -> {
+                    Calendar entryCalendar = Calendar.getInstance();
+                    entryCalendar.setTime(entry.getKey());
+                    return entryCalendar.get(Calendar.YEAR) == calendar.get(Calendar.YEAR)
+                            && entryCalendar.get(Calendar.MONTH) == calendar.get(Calendar.MONTH)
+                            && entryCalendar.get(Calendar.DAY_OF_MONTH) == calendar.get(Calendar.DAY_OF_MONTH);
+                })
+                .map(Map.Entry::getValue);
+    }
+
+
 
     public static Builder builder(String symbol){ return new Builder(symbol); }
 

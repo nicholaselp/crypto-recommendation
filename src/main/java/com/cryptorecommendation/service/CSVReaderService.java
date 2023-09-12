@@ -14,10 +14,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.text.SimpleDateFormat;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -27,7 +25,7 @@ public class CSVReaderService {
     private static final Logger logger = LoggerFactory.getLogger(CSVReaderService.class);
     private final String csvPath;
 
-    //os this the best object to use for my purpose? research it
+    //TODO: os this the best object to use for my purpose? research it
     private List<CryptoCurrency> cryptoCurrencyList = new ArrayList<>();
 
     public CSVReaderService(String csvPath){
@@ -36,9 +34,9 @@ public class CSVReaderService {
 
     public List<CryptoCurrency> getCryptoCurrencyList(){ return cryptoCurrencyList; }
 
-    //handle if list is final empty]
-    //if no excels are found?
-    //if an excel is empty..
+    //TODO: handle if list is final empty]
+    //TODO: if no excels are found?
+    //TODO: if an excel is empty..
     public void readCsvFiles(){
         getCsvFiles().forEach(csvFile -> {
             logger.info("CSV File ---> " + csvFile.toString());

@@ -1,14 +1,12 @@
 package com.cryptorecommendation.controller.delegate;
 
 import com.crypto.recommendation.generated.api.CryptoRecommendationApiDelegate;
-import com.crypto.recommendation.generated.dto.CryptocurrencyDto;
 import com.crypto.recommendation.generated.dto.CryptocurrencyInfoDto;
 import com.crypto.recommendation.generated.dto.NormalizedRangeDto;
 import com.cryptorecommendation.controller.MainController;
 import com.cryptorecommendation.controller.command.GetAllCryptosCommand;
 import com.cryptorecommendation.controller.command.GetCryptoInfoCommand;
 import com.cryptorecommendation.controller.command.GetHighestNormalizedCommand;
-import org.joda.time.DateTime;
 import org.springframework.http.ResponseEntity;
 
 import java.util.List;
@@ -29,8 +27,8 @@ public class CryptoRecommendationApiControllerDelegate extends MainController im
     }
 
     @Override
-    public ResponseEntity<List<CryptocurrencyDto>> getAllCryptosSorted() {
-        return (ResponseEntity<List<CryptocurrencyDto>>) execute(getAllCryptosCommand, null);
+    public ResponseEntity<List<NormalizedRangeDto>> getAllCryptosSorted() {
+        return (ResponseEntity<List<NormalizedRangeDto>>) execute(getAllCryptosCommand, null);
     }
 
     @Override
@@ -39,7 +37,7 @@ public class CryptoRecommendationApiControllerDelegate extends MainController im
     }
 
     @Override
-    public ResponseEntity<NormalizedRangeDto> getHighestNormalizedByDay(DateTime date){
+    public ResponseEntity<NormalizedRangeDto> getHighestNormalizedByDay(String date){
         return (ResponseEntity<NormalizedRangeDto>) execute(getHighestNormalizedCommand, date);
     }
 }

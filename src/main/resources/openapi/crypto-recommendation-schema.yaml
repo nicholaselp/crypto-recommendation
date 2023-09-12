@@ -1,16 +1,9 @@
 components:
   schemas:
-    Cryptocurrencies:
+    NormalizedRangeList:
       type: array
       items:
-       $ref: '#/components/schemas/Cryptocurrency'
-    Cryptocurrency:
-      type: object
-      properties:
-        symbol:
-          type: string
-        normalizedRange:
-          type: number
+       $ref: '#/components/schemas/NormalizedRange'
     CryptocurrencyInfo:
       type: object
       properties:
@@ -29,7 +22,7 @@ components:
       properties:
         symbol:
           $ref: '#/components/schemas/Symbol'
-        highestNormRange:
+        normalizedRange:
           type: number
     Symbol:
       type: string

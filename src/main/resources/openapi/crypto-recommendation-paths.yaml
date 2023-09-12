@@ -11,7 +11,7 @@ operations:
           content:
             application/json:
               schema:
-                $ref: 'crypto-recommendation-schema.yaml#/components/schemas/Cryptocurrencies'
+                $ref: 'crypto-recommendation-schema.yaml#/components/schemas/NormalizedRangeList'
         400:
           $ref: 'common.yaml#/errors/invalid-input'
         500:
@@ -53,7 +53,7 @@ operations:
           in: query
           schema:
             type: string
-            format: date-time
+            example: YYYY-MM-DD
       responses:
         200:
           description: responseDescr

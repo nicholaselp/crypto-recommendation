@@ -10,7 +10,7 @@ import org.springframework.boot.context.event.ApplicationStartedEvent;
 import org.springframework.context.event.EventListener;
 
 @SpringBootApplication(scanBasePackages ={
-		//fix packages....
+		//TODO: fix packages....
 		"com.cryptorecommendation",
 		"com.crypto.recommendation.generated.api"
 })
