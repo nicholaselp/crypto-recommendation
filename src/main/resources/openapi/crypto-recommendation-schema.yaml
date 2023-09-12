@@ -1,0 +1,35 @@
+components:
+  schemas:
+    Cryptocurrencies:
+      type: array
+      items:
+       $ref: '#/components/schemas/Cryptocurrency'
+    Cryptocurrency:
+      type: object
+      properties:
+        symbol:
+          type: string
+        normalizedRange:
+          type: number
+    CryptocurrencyInfo:
+      type: object
+      properties:
+        symbol:
+          $ref: '#/components/schemas/Symbol'
+        oldestPrice:
+          type: number
+        newestPrice:
+          type: number
+        minPrice:
+          type: number
+        maxPrice:
+          type: number
+    NormalizedRange:
+      type: object
+      properties:
+        symbol:
+          $ref: '#/components/schemas/Symbol'
+        highestNormRange:
+          type: number
+    Symbol:
+      type: string

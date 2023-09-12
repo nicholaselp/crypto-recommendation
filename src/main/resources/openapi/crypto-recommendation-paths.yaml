@@ -1,0 +1,73 @@
+operations:
+  crypto-sorted-descending-operation:
+    get:
+      tags:
+        - crypto-recommendation
+      summary: Returns descending sorted list of all cryptos, comparing the normalized range (i.e. (max-min)/min)
+      operationId: get-all-cryptos-sorted
+      responses:
+        200:
+          description: responseDesc
+          content:
+            application/json:
+              schema:
+                $ref: 'crypto-recommendation-schema.yaml#/components/schemas/Cryptocurrencies'
+        400:
+          $ref: 'common.yaml#/errors/invalid-input'
+        500:
+          $ref: 'common.yaml#/errors/internal-error'
+  crypto-info-operation:
+    get:
+      tags:
+        - crypto-recommendation
+      summary: Returns oldest/newest/min/max value of a requested crypto
+      operationId: get-crypto-info
+      parameters:
+        - name: cryptoSymbol
+          description: Symbol of Cryptocurrency
+          in: path
+          schema:
+            type: string
+      responses:
+        200:
+          description: responseDesc
+          content:
+            application/json:
+              schema:
+                $ref: 'crypto-recommendation-schema.yaml#/components/schemas/CryptocurrencyInfo'
+        400:
+          $ref: 'common.yaml#/errors/invalid-input'
+        404:
+          $ref: 'common.yaml#/errors/not-found'
+        500:
+          $ref: 'common.yaml#/errors/internal-error'
+  highest-range-operation:
+    get:
+      tags:
+        - crypto-recommendation
+      summary: Returns the crypto with the highest normalized range for a specific day
+      operationId: getHighestNormalizedByDay
+      parameters:
+        - name: date
+          description: Date to return highest normalized range
+          in: query
+          schema:
+            type: string
+            format: date-time
+      responses:
+        200:
+          description: responseDescr
+          content:
+            application/json:
+              schema:
+                $ref: 'crypto-recommendation-schema.yaml#/components/schemas/NormalizedRange'
+        400:
+          $ref: 'common.yaml#/errors/invalid-input'
+        404:
+          $ref: 'common.yaml#/errors/not-found'
+        500:
+          $ref: 'common.yaml#/errors/internal-error'
+
+
+
+

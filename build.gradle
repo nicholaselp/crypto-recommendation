@@ -1,0 +1,96 @@
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '3.1.3'
+	id 'io.spring.dependency-management' version '1.1.3'
+	id 'org.openapi.generator' version '5.4.0'
+
+}
+
+group = 'com'
+version = '0.0.1-SNAPSHOT'
+
+java {
+	sourceCompatibility = '17'
+}
+
+//defines the source directories for project. Way to tell gradle where to look for the project source code, resources and test code
+sourceSets {
+	main {
+		java.srcDirs = ["$buildDir/generated/src/main/java", "$projectDir/src/main/java"]
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'javax.servlet:javax.servlet-api:4.0.1'
+
+	//openAPI
+	implementation 'io.swagger.core.v3:swagger-annotations:2.1.10'
+	compileOnly 'javax.annotation:javax.annotation-api:1.3.2' // Use the version appropriate for your project
+	implementation 'javax.validation:validation-api:2.0.1.Final'
+	implementation 'org.openapitools:jackson-databind-nullable:0.2.1' // Use the version appropriate for your project
+
+	implementation 'com.fasterxml.jackson.datatype:jackson-datatype-joda'
+
+	implementation 'com.google.guava:guava:30.1.1-jre'
+
+
+	//CSV
+	implementation 'com.opencsv:opencsv:5.5.2'
+
+
+
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}
+
+compileJava {
+	dependsOn(processResources, tasks.openApiGenerate)
+}
+
+openApiGenerate {
+	generatorName = 'spring' // Specify the generator you want to use, e.g., 'java', 'spring', 'typescript-angular', etc.
+	inputSpec = "$rootDir/src/main/resources/openapi/crypto-recommendation-api.yaml" // Path to your OpenAPI specification file
+	outputDir = "$buildDir/generated" // Output directory for generated code
+	templateDir = "$projectDir/src/main/resources/templates"
+	apiPackage = 'com.crypto.recommendation.generated.api' // Package name for generated API classes
+	invokerPackage = 'com.crypto.recommendation.generated.api'
+	modelPackage = 'com.crypto.recommendation.generated.dto' // Package name for generated model classes
+	modelNameSuffix = 'Dto' // Optional: Suffix to add to generated model class names
+	generateModelTests = true
+
+	configOptions = [
+			dateLibrary: "joda",
+			interfaceOnly: 'false',
+			skipDefaultInterface: 'false',
+			useApiIgnore: 'false',
+			swaggerAnnotations: 'true',
+			delegatePattern: 'true',
+			useSpringController: 'true',
+			useTags: 'true',
+			discriminatorCaseSensitive: 'true',
+			hideGenerationTimestamp: 'true',
+			implicitHeaders: 'false',
+			ignoreAnyOfInEnum: 'true',
+			serializableModel: 'true',
+			generateSupportiingFiles: 'true',
+			documentationProvider: 'none',
+			annotationLibrary: 'swagger2'
+	]
+
+	globalProperties = [
+			modelDocs: "false",
+			apis: '',
+			models: '',
+			supportingFiles: 'ApiUtil.java'
+	]
+}

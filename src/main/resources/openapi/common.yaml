@@ -1,0 +1,9 @@
+errors:
+  invalid-input:
+    description: Invalid input
+    content: { }
+  internal-error:
+    description: Unexpected internal server error
+  not-found:
+    description: Cryptocurrency not found
+    content: { }

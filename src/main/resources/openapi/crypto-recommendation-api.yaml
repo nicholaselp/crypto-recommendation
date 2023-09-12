@@ -1,0 +1,12 @@
+openapi: 3.0.3
+info:
+  title: Crypto Recommendation API
+  description: ''
+  version: 1.0.0
+paths:
+  /v1/crypto-recommendation/all-sorted:
+    $ref: 'crypto-recommendation-paths.yaml#/operations/crypto-sorted-descending-operation'
+  /v1/crypto-recommendation/{cryptoSymbol}/info:
+    $ref: 'crypto-recommendation-paths.yaml#/operations/crypto-info-operation'
+  /v1/crypto-recommendation/highest-range:
+    $ref: 'crypto-recommendation-paths.yaml#/operations/highest-range-operation'
