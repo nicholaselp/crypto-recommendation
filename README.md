@@ -14,6 +14,24 @@ The recommendation service uses Gradle as its build automation tool and OpenAPI 
 ### Documentation
 Documentation of the project can be found in the [Documentation](Documentation/index.html) folder located in the root directory
 
-
 ### Building the project
 ./gradlew clean build
+
+### Dockerized spring boot app
+This spring boot app contains a [DockerFile](Dockerfile) to containerize the application
+
+#### How to run
+Make sure docker application is up and running
+In the root directory of this project run below commands
+
+<u>Create docker image</u><br>
+docker build -t {imageName} <br>
+docker build -t crypto-recommendation
+
+<u>Create and start container</u><br>
+docker run -p 8000:8080 {imageName} <br>
+docker run -p 8000:8080 crypto-recommendation-1.0
+
+<u>Other commands</u><br>
+docker container ls -> see containers running<br>
+docker images -> see images
