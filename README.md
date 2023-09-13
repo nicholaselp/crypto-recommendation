@@ -25,12 +25,12 @@ Make sure docker application is up and running.<br>
 In the root directory of this project run below commands
 
 #### Create docker image
-docker build -t {imageName} <br>
-docker build -t crypto-recommendation
+docker build -t {imageName} . <br>
+docker build -t crypto-recommendation .
 
 #### Create and start container
 docker run -p 8000:8080 {imageName} <br>
-docker run -p 8000:8080 crypto-recommendation-1.0
+docker run -p 8000:8080 crypto-recommendation
 
 #### Other commands
 docker container ls -> see containers running<br>
