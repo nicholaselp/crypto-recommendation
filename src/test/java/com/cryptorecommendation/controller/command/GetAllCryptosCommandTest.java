@@ -22,7 +22,7 @@ public class GetAllCryptosCommandTest {
 
         NormalizedRangeDto xrpDto = new NormalizedRangeDto();
         xrpDto.setSymbol("XRP");
-        xrpDto.setNormalizedRange(BigDecimal.valueOf(0.0192));
+        xrpDto.setNormalizedRange(BigDecimal.valueOf(0.0193));
 
         assertThat(command.execute(null)).isNotEmpty().hasSize(2)
                 .containsExactlyInAnyOrderElementsOf(List.of(bitcoinDto, xrpDto));

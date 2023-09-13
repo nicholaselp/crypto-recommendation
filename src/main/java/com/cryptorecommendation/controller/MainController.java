@@ -4,13 +4,9 @@ import com.cryptorecommendation.controller.command.Command;
 import com.cryptorecommendation.exceptions.CryptoCurrencyNotFoundException;
 import com.cryptorecommendation.exceptions.ValidationException;
 import com.google.common.collect.ImmutableMap;
-import com.sun.tools.javac.Main;
-import org.apache.coyote.Response;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 
 import java.util.Map;

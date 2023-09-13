@@ -3,6 +3,7 @@ package com.cryptorecommendation.controller.command;
 import com.crypto.recommendation.generated.dto.NormalizedRangeDto;
 import com.cryptorecommendation.service.CSVReaderService;
 
+import javax.annotation.Nullable;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -16,10 +17,8 @@ public class GetAllCryptosCommand implements Command<Void, List<NormalizedRangeD
     public GetAllCryptosCommand(CSVReaderService csvReaderService){
         this.csvReaderService = requireNonNull(csvReaderService, "CSVReaderService is missing");
     }
-
-    //TODO: dont like this void request..
     @Override
-    public List<NormalizedRangeDto> execute(Void request) {
+    public List<NormalizedRangeDto> execute(@Nullable Void request) {
         return csvReaderService.getCryptoCurrencyList()
                 .stream().map(crypto -> {
                     NormalizedRangeDto dto = new NormalizedRangeDto();

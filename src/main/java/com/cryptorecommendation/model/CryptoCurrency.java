@@ -48,8 +48,7 @@ public class CryptoCurrency {
 
 
     public BigDecimal getNormalizedRange(){
-        //TODO: is Rounding.FLOOR ok? also scale 2 is ok?
-        return getMaxPrice().subtract(getMinPrice()).divide(getMinPrice(), 4, RoundingMode.FLOOR);
+        return getMaxPrice().subtract(getMinPrice()).divide(getMinPrice(), 4, RoundingMode.HALF_UP);
     }
 
     public BigDecimal getNormalizedRange(Date date){
@@ -63,7 +62,7 @@ public class CryptoCurrency {
 
         var maxPrice = getMaxPriceSpecificDate(calendar);
         var minPrice = getMinPriceSpecificDate(calendar);
-        return maxPrice.subtract(minPrice).divide(minPrice, 4, RoundingMode.FLOOR);
+        return maxPrice.subtract(minPrice).divide(minPrice, 4, RoundingMode.HALF_UP);
     }
 
     private boolean containsDate(Calendar calendar) {
@@ -83,7 +82,7 @@ public class CryptoCurrency {
     private BigDecimal getMinPriceSpecificDate(Calendar calendar){
         return getSpecificDate(calendar)
                 .min(BigDecimal::compareTo)
-                .orElse(BigDecimal.ZERO); //TODO: dont like this..
+                .orElse(BigDecimal.ZERO);
     }
 
     private Stream<BigDecimal> getSpecificDate(Calendar calendar){

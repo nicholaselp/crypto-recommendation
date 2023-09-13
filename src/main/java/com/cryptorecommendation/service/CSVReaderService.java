@@ -24,7 +24,6 @@ public class CSVReaderService {
     private static final Logger logger = LoggerFactory.getLogger(CSVReaderService.class);
     private final String csvPath;
 
-    //TODO: os this the best object to use for my purpose? research it
     private List<CryptoCurrency> cryptoCurrencyList = new ArrayList<>();
 
     public CSVReaderService(String csvPath){
@@ -33,9 +32,6 @@ public class CSVReaderService {
 
     public List<CryptoCurrency> getCryptoCurrencyList(){ return cryptoCurrencyList; }
 
-    //TODO: handle if list is final empty]
-    //TODO: if no excels are found?
-    //TODO: if an excel is empty..
     public void readCsvFiles(){
         getCsvFiles().forEach(csvFile -> {
             logger.info("CSV File ---> " + csvFile.toString());

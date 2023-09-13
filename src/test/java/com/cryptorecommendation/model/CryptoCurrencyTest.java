@@ -53,7 +53,7 @@ public class CryptoCurrencyTest {
         String dateString = "2022-01-02";
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
-        assertThat(xrp.getNormalizedRange(dateFormat.parse(dateString))).isEqualTo(BigDecimal.valueOf(0.0067));
+        assertThat(xrp.getNormalizedRange(dateFormat.parse(dateString))).isEqualTo(BigDecimal.valueOf(0.0068));
     }
 
     @Test

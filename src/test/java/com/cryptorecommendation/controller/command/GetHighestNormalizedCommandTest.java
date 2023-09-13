@@ -31,7 +31,7 @@ public class GetHighestNormalizedCommandTest {
     @Test
     public void get_highest_normalized_range(){
         var expected = new NormalizedRangeDto();
-        expected.setNormalizedRange(BigDecimal.valueOf(0.0192));
+        expected.setNormalizedRange(BigDecimal.valueOf(0.0193));
         expected.setSymbol("XRP");
 
         assertThat(command.execute("2022-01-01")).isEqualTo(expected);
