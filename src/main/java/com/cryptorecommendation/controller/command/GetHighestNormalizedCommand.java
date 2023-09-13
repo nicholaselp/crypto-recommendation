@@ -2,13 +2,10 @@ package com.cryptorecommendation.controller.command;
 
 import com.crypto.recommendation.generated.dto.NormalizedRangeDto;
 import com.cryptorecommendation.exceptions.ValidationException;
-import com.cryptorecommendation.model.CryptoCurrency;
 import com.cryptorecommendation.service.CSVReaderService;
-import org.joda.time.DateTime;
 
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
-import java.time.format.DateTimeFormatter;
 import java.util.Comparator;
 import java.util.Date;
 

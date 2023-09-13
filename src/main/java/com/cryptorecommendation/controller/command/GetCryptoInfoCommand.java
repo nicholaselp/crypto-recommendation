@@ -2,7 +2,6 @@ package com.cryptorecommendation.controller.command;
 
 import com.crypto.recommendation.generated.dto.CryptocurrencyInfoDto;
 import com.cryptorecommendation.exceptions.CryptoCurrencyNotFoundException;
-import com.cryptorecommendation.exceptions.ValidationException;
 import com.cryptorecommendation.model.CryptoCurrency;
 import com.cryptorecommendation.service.CSVReaderService;
 

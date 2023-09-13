@@ -1,8 +1,8 @@
 package com.cryptorecommendation.service;
 
+import com.cryptorecommendation.exceptions.ValidationException;
 import com.cryptorecommendation.model.CryptoCurrency;
 import com.opencsv.CSVReader;
-import com.opencsv.exceptions.CsvException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,9 +14,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.stream.Stream;
 
 import static java.util.Objects.requireNonNull;
@@ -47,12 +46,20 @@ public class CSVReaderService {
 
     private List<Path> getCsvFiles() {
         try(Stream<Path> files = Files.list(Paths.get(csvPath))){
-            return files.filter(Files::isRegularFile)
+
+            List<Path> csvFiles = files.filter(Files::isRegularFile)
                     .filter(path -> path.toString().toLowerCase().endsWith(".csv"))
-                    .collect(Collectors.toList());
+                    .toList();
+
+            if(csvFiles.isEmpty()){
+                throw new ValidationException("No CSV files found in path: " +  csvPath);
+            }
+
+            return csvFiles;
+
         } catch (IOException exception){
             logger.error(exception.toString());
-            throw new RuntimeException("Error while reading excel files from path: " + csvPath);
+            throw new ValidationException("Error while reading excel files from path: " + csvPath);
         }
     }
 
@@ -70,9 +77,10 @@ public class CSVReaderService {
                         });
                 return cryptoBuilder.build();
             }
-        } catch (IOException | CsvException e) {
-            throw new RuntimeException(e);
+        } catch (Exception exception) {
+            logger.error(exception.toString());
+            throw new ValidationException("Error while reading CSVs");
         }
-        throw new RuntimeException("CSV is empty..");
+        throw new ValidationException("CSV file '" + csvFile.getFileName() + "' is empty");
     }
 }

@@ -5,11 +5,12 @@ import com.cryptorecommendation.exceptions.ValidationException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.stream.Collectors;
+import java.util.Objects;
 import java.util.stream.Stream;
 
 import static java.util.Objects.isNull;
@@ -52,11 +53,12 @@ public class CryptoCurrency {
     }
 
     public BigDecimal getNormalizedRange(Date date){
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(date);
+        var calendar = createCalendar(date);
 
         if(!containsDate(calendar)){
-            throw new ValidationException("No Data found for: " + date);
+                throw new ValidationException("No data found for: " +
+                        new SimpleDateFormat("yyyy-MM-dd").format(date));
+
         }
 
         var maxPrice = getMaxPriceSpecificDate(calendar);
@@ -66,18 +68,13 @@ public class CryptoCurrency {
 
     private boolean containsDate(Calendar calendar) {
         return priceMap.keySet().stream()
-                .map(timestamp -> {
-                    Calendar entryCalendar = Calendar.getInstance();
-                    entryCalendar.setTime(timestamp);
-                    return entryCalendar;
-                })
+                .map(this::createCalendar)
                 .anyMatch(entrycalendar -> entrycalendar.get(Calendar.YEAR) == calendar.get(Calendar.YEAR)
                         && entrycalendar.get(Calendar.MONTH) == calendar.get(Calendar.MONTH)
                         && entrycalendar.get(Calendar.DAY_OF_MONTH) == calendar.get(Calendar.DAY_OF_MONTH));
     }
 
     private BigDecimal getMaxPriceSpecificDate(Calendar calendar){
-        var x = getSpecificDate(calendar).toList();
         return getSpecificDate(calendar)
                 .max(BigDecimal::compareTo)
                 .orElse(BigDecimal.ZERO);
@@ -92,13 +89,33 @@ public class CryptoCurrency {
     private Stream<BigDecimal> getSpecificDate(Calendar calendar){
         return priceMap.entrySet().stream()
                 .filter(entry -> {
-                    Calendar entryCalendar = Calendar.getInstance();
-                    entryCalendar.setTime(entry.getKey());
+                    var entryCalendar = createCalendar(entry.getKey());
                     return entryCalendar.get(Calendar.YEAR) == calendar.get(Calendar.YEAR)
                             && entryCalendar.get(Calendar.MONTH) == calendar.get(Calendar.MONTH)
                             && entryCalendar.get(Calendar.DAY_OF_MONTH) == calendar.get(Calendar.DAY_OF_MONTH);
                 })
                 .map(Map.Entry::getValue);
+    }
+
+    private Calendar createCalendar(Date date){
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+
+        return calendar;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        CryptoCurrency that = (CryptoCurrency) o;
+        return Objects.equals(symbol, that.symbol) &&
+                Objects.equals(priceMap, that.priceMap);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(symbol, priceMap);
     }
 
 
@@ -125,7 +142,5 @@ public class CryptoCurrency {
         public CryptoCurrency build(){
             return new CryptoCurrency(symbol, priceMap);
         }
-
-
     }
 }
