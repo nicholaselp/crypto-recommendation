@@ -4,9 +4,9 @@ info:
   description: There are 3 APIs exposed all reading from the csv files of given cryptocurrencies. The APIs retrieve data from those cryptocurrencies
   version: 1.0.0
 paths:
-  /v1/crypto-recommendation/all-sorted:
+  /v1/all-sorted:
     $ref: 'crypto-recommendation-paths.yaml#/operations/crypto-sorted-descending-operation'
-  /v1/crypto-recommendation/{cryptoSymbol}/info:
+  /v1/{cryptoSymbol}/info:
     $ref: 'crypto-recommendation-paths.yaml#/operations/crypto-info-operation'
-  /v1/crypto-recommendation/highest-range:
+  /v1/highest-range:
     $ref: 'crypto-recommendation-paths.yaml#/operations/highest-range-operation'
