@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
-  title: Crypto Recommendation API
-  description: ''
+  title: Cryptocurrency Recommendation API
+  description: There are 3 APIs exposed all reading from the csv files of given cryptocurrencies. The APIs retrieve data from those cryptocurrencies
   version: 1.0.0
 paths:
   /v1/crypto-recommendation/all-sorted:

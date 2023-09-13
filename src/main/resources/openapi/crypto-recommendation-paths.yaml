@@ -7,7 +7,7 @@ operations:
       operationId: get-all-cryptos-sorted
       responses:
         200:
-          description: responseDesc
+          description: Successfully returned the cryptocurrencies sorted in descending order by their normalized range
           content:
             application/json:
               schema:
@@ -20,17 +20,18 @@ operations:
     get:
       tags:
         - crypto-recommendation
-      summary: Returns oldest/newest/min/max value of a requested crypto
+      summary: Returns oldest/newest/min/max value of a requested cryptocurrency. If the provided cryptocurrency does not exist then an appropriate error is returned.
       operationId: get-crypto-info
       parameters:
         - name: cryptoSymbol
           description: Symbol of Cryptocurrency
+          example: btc
           in: path
           schema:
             type: string
       responses:
         200:
-          description: responseDesc
+          description: Successfully returned oldest/newest/min/max values of a requested cryptocurrency
           content:
             application/json:
               schema:
@@ -49,7 +50,9 @@ operations:
       operationId: getHighestNormalizedByDay
       parameters:
         - name: date
+          required: true
           description: Date to return highest normalized range
+          example: 2022-09-13
           in: query
           schema:
             type: string

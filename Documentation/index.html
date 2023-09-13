@@ -1,0 +1,61 @@
+<!-- HTML for static distribution bundle build -->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>Swagger UI</title>
+    <link rel="stylesheet" type="text/css" href="./swagger-ui.css" >
+    <link rel="icon" type="image/png" href="./favicon-32x32.png" sizes="32x32" />
+    <link rel="icon" type="image/png" href="./favicon-16x16.png" sizes="16x16" />
+    <style>
+      html
+      {
+        box-sizing: border-box;
+        overflow: -moz-scrollbars-vertical;
+        overflow-y: scroll;
+      }
+
+      *,
+      *:before,
+      *:after
+      {
+        box-sizing: inherit;
+      }
+
+      body
+      {
+        margin:0;
+        background: #fafafa;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="swagger-ui"></div>
+
+    <script src="./swagger-ui-bundle.js" charset="UTF-8"> </script>
+    <script src="./swagger-ui-standalone-preset.js" charset="UTF-8"> </script>
+    <script>
+    window.onload = function() {
+      // Begin Swagger UI call region
+      const ui = SwaggerUIBundle({
+        spec: /*intellij-swagger-spec-start*/{"openapi":"3.0.3","info":{"title":"Cryptocurrency Recommendation API","description":"There are 3 APIs exposed all reading from the csv files of given cryptocurrencies. The APIs retrieve data from those cryptocurrencies","version":"1.0.0"},"paths":{"/v1/crypto-recommendation/all-sorted":{"get":{"tags":["crypto-recommendation"],"summary":"Returns descending sorted list of all cryptos, comparing the normalized range (i.e. (max-min)/min)","operationId":"get-all-cryptos-sorted","responses":{"200":{"description":"Successfully returned the cryptocurrencies sorted in descending order by their normalized range","content":{"application/json":{"schema":{"type":"array","items":{"type":"object","properties":{"symbol":{"type":"string"},"normalizedRange":{"type":"number"}}}}}}},"400":{"description":"Invalid input","content":{}},"500":{"description":"Unexpected internal server error"}}}},"/v1/crypto-recommendation/{cryptoSymbol}/info":{"get":{"tags":["crypto-recommendation"],"summary":"Returns oldest/newest/min/max value of a requested cryptocurrency. If the provided cryptocurrency does not exist then an appropriate error is returned.","operationId":"get-crypto-info","parameters":[{"name":"cryptoSymbol","description":"Symbol of Cryptocurrency","example":"btc","in":"path","schema":{"type":"string"}}],"responses":{"200":{"description":"Successfully returned oldest/newest/min/max values of a requested cryptocurrency","content":{"application/json":{"schema":{"type":"object","properties":{"symbol":{"type":"string"},"oldestPrice":{"type":"number"},"newestPrice":{"type":"number"},"minPrice":{"type":"number"},"maxPrice":{"type":"number"}}}}}},"400":{"description":"Invalid input","content":{}},"404":{"description":"Cryptocurrency not found","content":{}},"500":{"description":"Unexpected internal server error"}}}},"/v1/crypto-recommendation/highest-range":{"get":{"tags":["crypto-recommendation"],"summary":"Returns the crypto with the highest normalized range for a specific day","operationId":"getHighestNormalizedByDay","parameters":[{"name":"date","required":true,"description":"Date to return highest normalized range","example":"2022-09-13","in":"query","schema":{"type":"string","example":"YYYY-MM-DD"}}],"responses":{"200":{"description":"responseDescr","content":{"application/json":{"schema":{"type":"object","properties":{"symbol":{"type":"string"},"normalizedRange":{"type":"number"}}}}}},"400":{"description":"Invalid input","content":{}},"404":{"description":"Cryptocurrency not found","content":{}},"500":{"description":"Unexpected internal server error"}}}}}}/*intellij-swagger-spec-end*/,
+        validatorUrl: null,
+        dom_id: '#swagger-ui',
+        deepLinking: true,
+        presets: [
+          SwaggerUIBundle.presets.apis,
+          SwaggerUIStandalonePreset
+        ],
+        plugins: [
+          SwaggerUIBundle.plugins.DownloadUrl
+        ],
+        layout: "StandaloneLayout"
+      })
+      // End Swagger UI call region
+
+      window.ui = ui
+    }
+  </script>
+  </body>
+</html>
