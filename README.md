@@ -17,6 +17,15 @@ Documentation of the project can be found in the [Documentation](Documentation/i
 ## Building the project
 ./gradlew clean build
 
+## Running the spring boot application locally
+In a terminal run ./gradlew bootRun
+
+### Run APIs locally with port 8080
+http://localhost:8080/crypto-recommendation/v1/XRP/info <br>
+http://localhost:8080/crypto-recommendation/v1/all-sorted <br>
+http://localhost:8080/crypto-recommendation/v1/highest-range?date=2022-01-07 <br>
+
+
 ## Dockerized spring boot app
 This spring boot app contains a [DockerFile](Dockerfile) to containerize the application
 
@@ -35,3 +44,8 @@ docker run -p 8000:8080 crypto-recommendation
 #### Other commands
 docker container ls -> see containers running<br>
 docker images -> see images
+
+### APIs can now be runned on port 8000
+http://localhost:8000/crypto-recommendation/v1/XRP/info <br>
+http://localhost:8000/crypto-recommendation/v1/all-sorted <br>
+http://localhost:8000/crypto-recommendation/v1/highest-range?date=2022-01-07 <br>
