@@ -1,3 +1,9 @@
 server:
+  port: 8082
   servlet:
     context-path: /crypto-recommendation
+crypto-recommendation:
+  csv-path: csv-upload
+spring:
+  application:
+    name: crypto-recommendation
