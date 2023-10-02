@@ -1,5 +1,8 @@
 # CryptoCurrency Recommendation Service
 
+## About
+This is a project required by XM during the interview process. Task description in taskDocuments folder in the root of this project
+
 ## Description
 The Cryptocurrency recommendation service reads excel files located in the [csv-upload](csv-upload) folder during application startup.
 
