@@ -70,6 +70,31 @@ operations:
           $ref: 'common.yaml#/errors/not-found'
         500:
           $ref: 'common.yaml#/errors/internal-error'
+  by-market-status-operation:
+    get:
+      tags:
+        - crypto-recommendation
+      summary: Returns all cryptocurrency based on market status
+      operationId: get-by-market-status
+      parameters:
+        - name: marketStatus
+          description: Market status of cryptocurrency
+          example: active
+          in: query
+          required: true
+          schema:
+            $ref: 'crypto-recommendation-schema.yaml#/components/schemas/MarketStatus'
+      responses:
+        200:
+          description: Successfully returned the cryptocurrencies of provided market status
+          content:
+            application/json:
+              schema:
+                $ref: 'crypto-recommendation-schema.yaml#/components/schemas/CryptocurrencyInfo'
+        400:
+          $ref: 'common.yaml#/errors/invalid-input'
+        500:
+          $ref: 'common.yaml#/errors/internal-error'
 
 
 

@@ -17,6 +17,8 @@ components:
           type: number
         maxPrice:
           type: number
+        marketStatus:
+          $ref: '#/components/schemas/MarketStatus'
     NormalizedRange:
       type: object
       properties:
@@ -26,3 +28,9 @@ components:
           type: number
     Symbol:
       type: string
+    MarketStatus:
+      type: string
+      enum:
+        - active
+        - inactive
+        - suspended
