@@ -1,6 +1,7 @@
 package com.cryptorecommendation.controller.command;
 
 import com.crypto.recommendation.generated.dto.CryptocurrencyInfoDto;
+import com.crypto.recommendation.generated.dto.MarketStatusDto;
 import com.cryptorecommendation.exceptions.CryptoCurrencyNotFoundException;
 import com.cryptorecommendation.stubs.TestConfigApi;
 import org.junit.jupiter.api.Test;
@@ -31,6 +32,7 @@ public class GetCryptoInfoCommandTest {
         expectedInfo.setMaxPrice(BigDecimal.valueOf(47143.98));
         expectedInfo.setOldestPrice(BigDecimal.valueOf(46979.61));
         expectedInfo.setNewestPrice(BigDecimal.valueOf(46871.09));
+        expectedInfo.setMarketStatus(MarketStatusDto.ACTIVE);
 
         assertThat(command.execute("BTC")).isEqualTo(expectedInfo);
     }

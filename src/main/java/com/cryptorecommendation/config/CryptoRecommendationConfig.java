@@ -43,6 +43,11 @@ public class CryptoRecommendationConfig {
     }
 
     @Bean
+    GetByMarketStatusCommand getByMarketStatusCommand(CSVReaderService csvReaderService, CryptoCurrencyMapper cryptoCurrencyMapper){
+        return new GetByMarketStatusCommand(csvReaderService, cryptoCurrencyMapper);
+    }
+
+    @Bean
     CryptoCurrencyMapper cryptoCurrencyMapper(){
         return new CryptoCurrencyMapper();
     }
