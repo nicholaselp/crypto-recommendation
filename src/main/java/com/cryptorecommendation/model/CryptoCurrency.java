@@ -19,13 +19,16 @@ import static java.util.Objects.requireNonNull;
 public class CryptoCurrency {
     private final String symbol;
     private Map<Timestamp, BigDecimal> priceMap;
+    private final MarketStatus marketStatus;
 
-    private CryptoCurrency(String symbol, Map<Timestamp, BigDecimal> priceMap){
+    private CryptoCurrency(String symbol, Map<Timestamp, BigDecimal> priceMap, MarketStatus marketStatus){
         this.symbol = requireNonNull(symbol, "symbol is missing");
         this.priceMap = priceMap;
+        this.marketStatus = marketStatus;
     }
 
     public String getSymbol(){ return symbol; }
+    public MarketStatus getMarketStatus(){ return marketStatus; }
 
     public BigDecimal getMaxPrice(){
         return priceMap.entrySet().stream().max(Map.Entry.comparingByValue()).map(Map.Entry::getValue)
@@ -124,6 +127,7 @@ public class CryptoCurrency {
     public static class Builder {
         private final String symbol;
         private Map<Timestamp, BigDecimal> priceMap;
+        private MarketStatus marketStatus;
 
         private Builder(String symbol){
             this.symbol = requireNonNull(symbol, "symbol is missing");
@@ -138,8 +142,13 @@ public class CryptoCurrency {
             return this;
         }
 
+        public Builder withMarketStatus(MarketStatus marketStatus){
+            this.marketStatus = marketStatus;
+            return this;
+        }
+
         public CryptoCurrency build(){
-            return new CryptoCurrency(symbol, priceMap);
+            return new CryptoCurrency(symbol, priceMap, marketStatus);
         }
     }
 }

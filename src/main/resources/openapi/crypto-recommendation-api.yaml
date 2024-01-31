@@ -10,3 +10,5 @@ paths:
     $ref: 'crypto-recommendation-paths.yaml#/operations/crypto-info-operation'
   /v1/highest-range:
     $ref: 'crypto-recommendation-paths.yaml#/operations/highest-range-operation'
+  /v1/by-market-status:
+    $ref: 'crypto-recommendation-paths.yaml#/operations/by-market-status-operation'

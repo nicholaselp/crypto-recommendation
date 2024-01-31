@@ -2,6 +2,7 @@ package com.cryptorecommendation.service;
 
 import com.cryptorecommendation.exceptions.ValidationException;
 import com.cryptorecommendation.model.CryptoCurrency;
+import com.cryptorecommendation.model.MarketStatus;
 import com.opencsv.CSVReader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -71,7 +72,9 @@ public class CSVReaderService {
                         .forEach(record -> {
                             cryptoBuilder.addPrice(new Timestamp(Long.parseLong(record[0])), new BigDecimal(record[2]));
                         });
-                return cryptoBuilder.build();
+                return cryptoBuilder
+                        .withMarketStatus(MarketStatus.ACTIVE)
+                        .build();
             }
         } catch (Exception exception) {
             logger.error(exception.toString());
